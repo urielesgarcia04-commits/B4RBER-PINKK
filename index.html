@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BARBER PINKK</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:#f5f5f3;height:100vh;overflow:hidden}
+.wrap{display:flex;height:100vh;background:#f5f5f3;overflow:hidden;position:relative}
+.side{width:190px;background:#fff;border-right:0.5px solid #e5e5e5;display:flex;flex-direction:column;padding:1rem 0;flex-shrink:0}
+.logo{padding:0.5rem 1rem 1.5rem;display:flex;align-items:center;gap:8px}
+.logo-ico{width:32px;height:32px;background:#993556;border-radius:8px;display:flex;align-items:center;justify-content:center}
+.logo-ico i{color:#fff;font-size:18px}
+.logo-txt{font-size:12px;font-weight:600;color:#1a1a1a;line-height:1.2;letter-spacing:.02em}
+.nav{display:flex;align-items:center;gap:9px;padding:9px 1rem;cursor:pointer;font-size:13px;color:#666;border-left:2px solid transparent;transition:all .12s}
+.nav:hover{background:#fafafa;color:#1a1a1a}
+.nav.on{color:#1a1a1a;background:#fdf0f4;border-left-color:#993556;font-weight:500}
+.nav i{font-size:17px}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.topbar{background:#fff;border-bottom:0.5px solid #e5e5e5;padding:.7rem 1.5rem;display:flex;align-items:center;justify-content:space-between}
+.ptitle{font-size:15px;font-weight:500;color:#1a1a1a}
+.topbar-left{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.horario-badge{display:inline-flex;align-items:center;gap:4px;background:#FBEAF0;color:#72243E;font-size:11px;padding:3px 9px;border-radius:99px;font-weight:500}
+.btn{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border-radius:8px;border:0.5px solid #ccc;background:transparent;cursor:pointer;font-size:13px;color:#1a1a1a;font-family:inherit;transition:background .12s}
+.btn:hover{background:#f5f5f3}
+.btn-dark{background:#993556;color:#fff;border-color:#993556}
+.btn-dark:hover{background:#72243E;border-color:#72243E}
+.content{flex:1;overflow-y:auto;padding:1.5rem}
+.sec{display:none}
+.sec.vis{display:block}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:1.25rem}
+.sc{background:#f5f5f3;border-radius:8px;padding:1rem}
+.sc-lbl{font-size:11px;color:#888;margin-bottom:4px}
+.sc-val{font-size:22px;font-weight:500;color:#1a1a1a}
+.sc-sub{font-size:11px;color:#aaa;margin-top:2px}
+.card{background:#fff;border:0.5px solid #e5e5e5;border-radius:12px;padding:1rem 1.25rem;margin-bottom:1rem}
+.ch{display:flex;align-items:center;justify-content:space-between;margin-bottom:.9rem}
+.ct{font-size:13px;font-weight:500;color:#1a1a1a}
+.appt{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:0.5px solid #f0f0f0}
+.appt:last-child{border-bottom:none}
+.at{font-size:12px;font-weight:500;color:#888;min-width:40px}
+.ai{flex:1}
+.an{font-size:13px;font-weight:500;color:#1a1a1a}
+.as{font-size:11px;color:#888}
+.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:99px;font-size:11px;font-weight:500;cursor:pointer;user-select:none}
+.bg{background:#EAF3DE;color:#3B6D11}
+.ba{background:#FAEEDA;color:#854F0B}
+.bgr{background:#F1EFE8;color:#5F5E5A}
+.break-badge{display:inline-flex;align-items:center;gap:4px;background:#F1EFE8;color:#5F5E5A;font-size:11px;padding:3px 9px;border-radius:99px;font-weight:500;margin:6px 0}
+.av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0}
+.av1{background:#FBEAF0;color:#72243E}
+.av2{background:#EAF3DE;color:#3B6D11}
+.av3{background:#EEEDFE;color:#534AB7}
+.av4{background:#FAEEDA;color:#854F0B}
+.av5{background:#E6F1FB;color:#185FA5}
+table{width:100%;font-size:13px;border-collapse:collapse;table-layout:fixed}
+th{text-align:left;font-size:11px;font-weight:500;color:#aaa;text-transform:uppercase;letter-spacing:.04em;padding:0 0 8px;border-bottom:0.5px solid #f0f0f0}
+td{padding:10px 0;border-bottom:0.5px solid #f0f0f0;color:#1a1a1a;vertical-align:middle;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+.fl{display:flex;align-items:center;gap:8px}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1rem}
+.fl2{display:flex;flex-direction:column;gap:4px}
+.lbl{font-size:12px;color:#888}
+input,select,textarea{width:100%;padding:8px 10px;border:0.5px solid #ccc;border-radius:8px;font-size:13px;background:#fff;color:#1a1a1a;font-family:inherit}
+input:focus,select:focus{outline:none;border-color:#993556}
+.svgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.svc{background:#fff;border:0.5px solid #e5e5e5;border-radius:12px;padding:1rem;text-align:center;transition:border-color .15s}
+.svc:hover{border-color:#993556}
+.svi{font-size:28px;color:#aaa;margin-bottom:8px}
+.svn{font-size:13px;font-weight:500;color:#1a1a1a}
+.svp{font-size:17px;font-weight:500;color:#993556;margin:4px 0 2px}
+.svt{font-size:11px;color:#aaa}
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:100;align-items:center;justify-content:center}
+.ov.open{display:flex}
+.modal{background:#fff;border-radius:12px;border:0.5px solid #e5e5e5;padding:1.5rem;width:400px;max-width:95vw}
+.mt{font-size:15px;font-weight:500;margin-bottom:1.25rem;color:#1a1a1a}
+.mf{display:flex;gap:8px;justify-content:flex-end;margin-top:1.25rem}
+.toast{display:none;position:fixed;bottom:1.5rem;right:1.5rem;background:#993556;color:#fff;padding:10px 16px;border-radius:8px;font-size:13px;z-index:200;box-shadow:0 4px 16px rgba(153,53,86,.3)}
+.toast.show{display:block}
+.pop-bar-row{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:0.5px solid #f0f0f0}
+.pop-bar-row:last-child{border-bottom:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- SIDEBAR -->
+  <aside class="side">
+    <div class="logo">
+      <div class="logo-ico"><i class="ti ti-scissors"></i></div>
+      <span class="logo-txt">BARBER<br>PINKK</span>
+    </div>
+    <div class="nav on" onclick="go('hoy',this)"><i class="ti ti-home"></i> Hoy</div>
+    <div class="nav" onclick="go('agenda',this)"><i class="ti ti-calendar"></i> Agenda</div>
+    <div class="nav" onclick="go('clientes',this)"><i class="ti ti-users"></i> Clientes</div>
+    <div class="nav" onclick="go('servicios',this)"><i class="ti ti-cut"></i> Servicios</div>
+    <div class="nav" onclick="go('ingresos',this)"><i class="ti ti-chart-bar"></i> Ingresos</div>
+    <div style="flex:1"></div>
+    <div class="nav" onclick="go('config',this)"><i class="ti ti-settings"></i> Ajustes</div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-left">
+        <span class="ptitle" id="ptitle">Hoy</span>
+        <span class="horario-badge"><i class="ti ti-clock" style="font-size:11px"></i> 9am–1pm · 1:30pm–7pm</span>
+      </div>
+      <button class="btn btn-dark" onclick="abrirModal()"><i class="ti ti-plus"></i> Nueva cita</button>
+    </div>
+
+    <div class="content">
+
+      <!-- HOY -->
+      <div class="sec vis" id="sec-hoy">
+        <div class="stats">
+          <div class="sc"><div class="sc-lbl">Citas hoy</div><div class="sc-val" id="s-citas">0</div><div class="sc-sub" id="s-pend"></div></div>
+          <div class="sc"><div class="sc-lbl">Ingresos hoy</div><div class="sc-val" id="s-ing">$0</div><div class="sc-sub" id="s-comp"></div></div>
+          <div class="sc"><div class="sc-lbl">Próxima cita</div><div class="sc-val" id="s-prox">—</div><div class="sc-sub" id="s-prox-n"></div></div>
+        </div>
+        <div class="card">
+          <div class="ch"><span class="ct">Agenda del día</span><span style="font-size:11px;color:#aaa">Toca el estado para cambiar</span></div>
+          <div id="hoy-list"></div>
+        </div>
+      </div>
+
+      <!-- AGENDA -->
+      <div class="sec" id="sec-agenda">
+        <div class="card">
+          <div class="ch"><span class="ct">Todas las citas</span></div>
+          <table>
+            <thead><tr><th style="width:52px">Hora</th><th>Cliente</th><th>Servicio</th><th style="width:100px">Estado</th><th style="width:44px"></th></tr></thead>
+            <tbody id="agenda-tb"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- CLIENTES -->
+      <div class="sec" id="sec-clientes">
+        <div class="card">
+          <div class="ch"><span class="ct">Clientes</span><button class="btn" onclick="abrirModal()"><i class="ti ti-plus"></i> Añadir</button></div>
+          <table>
+            <thead><tr><th>Nombre</th><th style="width:70px">Visitas</th><th style="width:110px">Última visita</th><th style="width:72px">Total</th></tr></thead>
+            <tbody id="cli-tb"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- SERVICIOS -->
+      <div class="sec" id="sec-servicios">
+        <div class="svgrid" id="svc-grid"></div>
+      </div>
+
+      <!-- INGRESOS -->
+      <div class="sec" id="sec-ingresos">
+        <div class="stats">
+          <div class="sc"><div class="sc-lbl">Esta semana</div><div class="sc-val">$840</div></div>
+          <div class="sc"><div class="sc-lbl">Este mes</div><div class="sc-val">$3.120</div></div>
+          <div class="sc"><div class="sc-lbl">Promedio/día</div><div class="sc-val">$208</div></div>
+        </div>
+        <div class="card">
+          <div class="ch"><span class="ct">Ingresos por día — esta semana</span></div>
+          <canvas id="wchart" height="160"></canvas>
+        </div>
+        <div class="card">
+          <div class="ch"><span class="ct">Servicios más populares</span></div>
+          <div id="pop-list"></div>
+        </div>
+      </div>
+
+      <!-- CONFIG -->
+      <div class="sec" id="sec-config">
+        <div class="card">
+          <div class="ch"><span class="ct">Información del negocio</span></div>
+          <div class="fr">
+            <div class="fl2"><span class="lbl">Nombre</span><input value="BARBER PINKK" /></div>
+            <div class="fl2"><span class="lbl">Ciudad</span><input value="Santa Marta" /></div>
+            <div class="fl2"><span class="lbl">Turno mañana — apertura</span><input type="time" value="09:00" /></div>
+            <div class="fl2"><span class="lbl">Turno mañana — cierre</span><input type="time" value="13:00" /></div>
+            <div class="fl2"><span class="lbl">Turno tarde — apertura</span><input type="time" value="13:30" /></div>
+            <div class="fl2"><span class="lbl">Turno tarde — cierre</span><input type="time" value="19:00" /></div>
+            <div class="fl2"><span class="lbl">Teléfono</span><input value="+57 300 000 0000" /></div>
+            <div class="fl2"><span class="lbl">Dirección</span><input placeholder="Tu dirección…" /></div>
+          </div>
+          <div style="display:flex;justify-content:flex-end">
+            <button class="btn btn-dark" onclick="toast('Cambios guardados')">Guardar cambios</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODAL NUEVA CITA -->
+  <div class="ov" id="modal">
+    <div class="modal">
+      <div class="mt">Nueva cita — BARBER PINKK</div>
+      <div class="fr">
+        <div class="fl2"><span class="lbl">Cliente</span>
+          <select id="m-cli">
+            <option>Carlos Mendoza</option>
+            <option>Juan Pérez</option>
+            <option>Andrés Torres</option>
+            <option>Luis García</option>
+            <option>Miguel Ríos</option>
+            <option>Nuevo cliente…</option>
+          </select>
+        </div>
+        <div class="fl2"><span class="lbl">Fecha</span><input type="date" id="m-fecha" /></div>
+        <div class="fl2"><span class="lbl">Hora</span>
+          <select id="m-hora">
+            <optgroup label="Mañana (9am–1pm)">
+              <option>09:00</option><option>09:30</option><option>10:00</option>
+              <option>10:30</option><option>11:00</option><option>11:30</option>
+              <option>12:00</option><option>12:30</option>
+            </optgroup>
+            <optgroup label="Tarde (1:30pm–7pm)">
+              <option>13:30</option><option>14:00</option><option>14:30</option>
+              <option>15:00</option><option>15:30</option><option>16:00</option>
+              <option>16:30</option><option>17:00</option><option>17:30</option>
+              <option>18:00</option><option>18:30</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="fl2"><span class="lbl">Servicio</span>
+          <select id="m-svc">
+            <option>Corte clásico — $20</option>
+            <option>Barba — $15</option>
+            <option>Corte + barba — $30</option>
+            <option>Fade / degradado — $25</option>
+            <option>Tratamiento capilar — $35</option>
+            <option>Diseño de líneas — $18</option>
+          </select>
+        </div>
+      </div>
+      <div class="fl2" style="margin-bottom:.5rem"><span class="lbl">Notas</span><input placeholder="Opcional…" /></div>
+      <div class="mf">
+        <button class="btn" onclick="cerrarModal()">Cancelar</button>
+        <button class="btn btn-dark" onclick="guardarCita()">Guardar cita</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast-msg"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+const avClasses = ['av1','av2','av3','av4','av5'];
+
+const citas = [
+  {h:'09:00',n:'Carlos Mendoza',ini:'CM',av:'av1',svc:'Corte clásico',p:20,est:'completada'},
+  {h:'09:45',n:'Juan Pérez',ini:'JP',av:'av2',svc:'Barba',p:15,est:'completada'},
+  {h:'10:30',n:'Luis García',ini:'LG',av:'av4',svc:'Fade / degradado',p:25,est:'completada'},
+  {h:'11:00',n:'Andrés Torres',ini:'AT',av:'av3',svc:'Corte + barba',p:30,est:'pendiente'},
+  {h:'12:00',n:'Miguel Ríos',ini:'MR',av:'av5',svc:'Corte clásico',p:20,est:'pendiente'},
+  {h:'13:30',n:'Daniel Ruiz',ini:'DR',av:'av1',svc:'Tratamiento capilar',p:35,est:'pendiente'},
+  {h:'15:00',n:'Camilo Vega',ini:'CV',av:'av2',svc:'Fade / degradado',p:25,est:'pendiente'},
+  {h:'17:00',n:'Mateo López',ini:'ML',av:'av3',svc:'Corte clásico',p:20,est:'pendiente'},
+];
+
+const clientes = [
+  {n:'Carlos Mendoza',ini:'CM',av:'av1',vis:14,last:'Hoy',tot:'$280'},
+  {n:'Juan Pérez',ini:'JP',av:'av2',vis:9,last:'Hoy',tot:'$135'},
+  {n:'Luis García',ini:'LG',av:'av4',vis:21,last:'Hoy',tot:'$525'},
+  {n:'Andrés Torres',ini:'AT',av:'av3',vis:6,last:'10 may',tot:'$150'},
+  {n:'Miguel Ríos',ini:'MR',av:'av5',vis:4,last:'05 may',tot:'$80'},
+  {n:'Daniel Ruiz',ini:'DR',av:'av1',vis:11,last:'03 may',tot:'$220'},
+];
+
+const svcs = [
+  {ic:'ti-scissors',n:'Corte clásico',p:'$20',t:'30 min'},
+  {ic:'ti-razor',n:'Barba',p:'$15',t:'20 min'},
+  {ic:'ti-cut',n:'Corte + barba',p:'$30',t:'45 min'},
+  {ic:'ti-circle-dashed',n:'Fade / degradado',p:'$25',t:'40 min'},
+  {ic:'ti-droplet',n:'Tratamiento capilar',p:'$35',t:'50 min'},
+  {ic:'ti-sparkles',n:'Diseño de líneas',p:'$18',t:'25 min'},
+];
+
+const pop = [
+  {n:'Corte clásico',pct:35},
+  {n:'Corte + barba',pct:22},
+  {n:'Fade',pct:20},
+  {n:'Barba',pct:15},
+  {n:'Otros',pct:8},
+];
+
+const estCycle = ['pendiente','en curso','completada'];
+
+function estBadge(e) {
+  if (e==='completada') return '<span class="badge bg">Completada</span>';
+  if (e==='en curso')   return '<span class="badge ba">En curso</span>';
+  return '<span class="badge bgr">Pendiente</span>';
+}
+
+function calcStats() {
+  const comp = citas.filter(c=>c.est==='completada');
+  const pend = citas.filter(c=>c.est==='pendiente').length;
+  const ec   = citas.filter(c=>c.est==='en curso').length;
+  document.getElementById('s-citas').textContent = citas.length;
+  document.getElementById('s-pend').textContent  = pend+' pendientes'+(ec?' · '+ec+' en curso':'');
+  document.getElementById('s-ing').textContent   = '$'+comp.reduce((a,c)=>a+c.p,0);
+  document.getElementById('s-comp').textContent  = comp.length+' completadas';
+  const prox = citas.find(c=>c.est==='pendiente'||c.est==='en curso');
+  document.getElementById('s-prox').textContent   = prox ? prox.h : '—';
+  document.getElementById('s-prox-n').textContent = prox ? prox.n : '';
+}
+
+function render() {
+  calcStats();
+
+  let html = '';
+  let prevBloque = '';
+  citas.forEach((c,i) => {
+    const hh = parseInt(c.h.split(':')[0]);
+    const bloque = hh < 13 ? 'manana' : 'tarde';
+    if (bloque !== prevBloque) {
+      if (prevBloque === 'manana') {
+        html += `<div style="padding:6px 0"><span class="break-badge"><i class="ti ti-coffee" style="font-size:11px"></i> Descanso 1:00 – 1:30 pm</span></div>`;
+      }
+      prevBloque = bloque;
+    }
+    html += `<div class="appt">
+      <span class="at">${c.h}</span>
+      <div class="av ${c.av}">${c.ini}</div>
+      <div class="ai"><div class="an">${c.n}</div><div class="as">${c.svc} · $${c.p}</div></div>
+      <span onclick="cambiarEst(${i})">${estBadge(c.est)}</span>
+    </div>`;
+  });
+  document.getElementById('hoy-list').innerHTML = html;
+
+  document.getElementById('agenda-tb').innerHTML = citas.map((c,i)=>`
+    <tr>
+      <td style="font-weight:500">${c.h}</td>
+      <td><div class="fl"><div class="av ${c.av}" style="width:24px;height:24px;font-size:10px">${c.ini}</div>${c.n}</div></td>
+      <td>${c.svc}</td>
+      <td><span onclick="cambiarEst(${i})">${estBadge(c.est)}</span></td>
+      <td><button class="btn" style="padding:3px 8px;font-size:12px" onclick="eliminar(${i})"><i class="ti ti-trash"></i></button></td>
+    </tr>`).join('');
+
+  document.getElementById('cli-tb').innerHTML = clientes.map(c=>`
+    <tr>
+      <td><div class="fl"><div class="av ${c.av}" style="width:24px;height:24px;font-size:10px">${c.ini}</div>${c.n}</div></td>
+      <td>${c.vis}</td>
+      <td style="color:#888">${c.last}</td>
+      <td style="font-weight:500">${c.tot}</td>
+    </tr>`).join('');
+
+  document.getElementById('svc-grid').innerHTML = svcs.map(s=>`
+    <div class="svc">
+      <div class="svi"><i class="ti ${s.ic}"></i></div>
+      <div class="svn">${s.n}</div>
+      <div class="svp">${s.p}</div>
+      <div class="svt"><i class="ti ti-clock" style="font-size:11px"></i> ${s.t}</div>
+    </div>`).join('');
+
+  document.getElementById('pop-list').innerHTML = pop.map(p=>`
+    <div class="pop-bar-row">
+      <span style="font-size:13px;min-width:120px;color:#1a1a1a">${p.n}</span>
+      <div style="flex:1;height:6px;background:#f0f0f0;border-radius:3px;overflow:hidden">
+        <div style="height:100%;width:${p.pct}%;background:#993556;border-radius:3px"></div>
+      </div>
+      <span style="font-size:12px;color:#888;min-width:30px;text-align:right">${p.pct}%</span>
+    </div>`).join('');
+}
+
+function cambiarEst(i) {
+  const ci = estCycle.indexOf(citas[i].est);
+  citas[i].est = estCycle[(ci+1) % estCycle.length];
+  render();
+  toast('Estado actualizado');
+}
+
+function eliminar(i) {
+  citas.splice(i, 1);
+  render();
+  toast('Cita eliminada');
+}
+
+function go(s, el) {
+  document.querySelectorAll('.sec').forEach(x=>x.classList.remove('vis'));
+  document.getElementById('sec-'+s).classList.add('vis');
+  document.querySelectorAll('.nav').forEach(x=>x.classList.remove('on'));
+  el.classList.add('on');
+  const titles = {
+    hoy:'Hoy', agenda:'Agenda completa', clientes:'Clientes',
+    servicios:'Catálogo de servicios', ingresos:'Ingresos', config:'Ajustes'
+  };
+  document.getElementById('ptitle').textContent = titles[s];
+  if (s === 'ingresos') setTimeout(initChart, 80);
+}
+
+function abrirModal() {
+  document.getElementById('m-fecha').value = new Date().toISOString().split('T')[0];
+  document.getElementById('modal').classList.add('open');
+}
+function cerrarModal() {
+  document.getElementById('modal').classList.remove('open');
+}
+function guardarCita() {
+  const svc    = document.getElementById('m-svc').value;
+  const precio = parseInt(svc.match(/\$(\d+)/)?.[1] || '0');
+  const nombre = document.getElementById('m-cli').value;
+  citas.push({
+    h:   document.getElementById('m-hora').value,
+    n:   nombre,
+    ini: nombre.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase(),
+    av:  avClasses[citas.length % 5],
+    svc: svc.split('—')[0].trim(),
+    p:   precio,
+    est: 'pendiente'
+  });
+  citas.sort((a,b) => a.h.localeCompare(b.h));
+  cerrarModal();
+  render();
+  toast('Cita guardada');
+}
+
+function toast(msg) {
+  const t = document.getElementById('toast-msg');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+let chartInited = false;
+function initChart() {
+  if (chartInited) return;
+  chartInited = true;
+  new Chart(document.getElementById('wchart').getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'],
+      datasets: [{
+        data: [160,195,140,260,290,390,210],
+        backgroundColor: '#F4C0D1',
+        borderRadius: 4,
+        hoverBackgroundColor: '#993556'
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 11 }, color: '#aaa' } },
+        y: { grid: { color: 'rgba(0,0,0,0.05)' }, ticks: { font: { size: 11 }, color: '#aaa', callback: v => '$'+v } }
+      }
+    }
+  });
+}
+
+document.getElementById('modal').addEventListener('click', function(e) {
+  if (e.target === this) cerrarModal();
+});
+
+const hoy = new Date();
+const dias  = ['dom','lun','mar','mié','jue','vie','sáb'];
+const meses = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+document.getElementById('ptitle').textContent =
+  'Hoy — '+dias[hoy.getDay()]+' '+hoy.getDate()+' '+meses[hoy.getMonth()];
+
+render();
+</script>
+</body>
+</html>
